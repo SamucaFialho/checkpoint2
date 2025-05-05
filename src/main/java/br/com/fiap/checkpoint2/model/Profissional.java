@@ -2,12 +2,23 @@ package br.com.fiap.checkpoint2.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 
+@Entity
 public class Profissional {
 
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String status;
     private String nome;
     private String especialidade;
     private BigDecimal valor_hora;
@@ -15,12 +26,22 @@ public class Profissional {
     private LocalDateTime updated_at;
 
 
+    @OneToMany
+    private List<Profissional> consulta;
+
     public Long getId() {
         return id;
     }
     public void setId(Long id) {
         this.id = id;
     }
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
+   
     public String getNome() {
         return nome;
     }

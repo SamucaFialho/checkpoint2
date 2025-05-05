@@ -3,14 +3,26 @@ package br.com.fiap.checkpoint2.dto.dtoprofissional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import br.com.fiap.checkpoint2.model.Profissional;
+
 public class ProfissionalRequestCreate {
 
+
+private String status;
+       
         private Long id;
     private String nome;
     private String especialidade;
     private BigDecimal valor_hora;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
+
+
+    public Profissional toModel(){
+        Profissional profissional = new Profissional();
+        profissional.setStatus(this.status);
+        return profissional;
+    }
 
     
     public Long getId() {
@@ -48,6 +60,14 @@ public class ProfissionalRequestCreate {
     }
     public void setUpdated_at(LocalDateTime updated_at) {
         this.updated_at = updated_at;
+    }
+    public String getStatus() {
+        return status;
+    }
+    
+    
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

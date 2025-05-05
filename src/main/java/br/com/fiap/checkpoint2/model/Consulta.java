@@ -3,9 +3,17 @@ package br.com.fiap.checkpoint2.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+
+@Entity
 public class Consulta {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private LocalDateTime data_consulta;
     private String status_consulta;
@@ -15,6 +23,11 @@ public class Consulta {
     private LocalDateTime updated_at;
 
 
+    @ManyToOne
+    private Profissional profissional;
+
+    @ManyToOne
+    private Paciente paciente;
 
 
     public Long getId() {
