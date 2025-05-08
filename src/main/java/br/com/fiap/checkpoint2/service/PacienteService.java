@@ -14,6 +14,7 @@ import br.com.fiap.checkpoint2.model.Paciente;
 @Service
 public class PacienteService {
 
+
     private List<Paciente> pacientes = new ArrayList<>();
     private Long sequence = 1L;
 

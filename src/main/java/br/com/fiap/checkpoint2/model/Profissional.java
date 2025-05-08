@@ -27,7 +27,7 @@ public class Profissional {
 
 
     @OneToMany
-    private List<Profissional> consulta;
+    private List<Consulta> consulta;
 
     public Long getId() {
         return id;

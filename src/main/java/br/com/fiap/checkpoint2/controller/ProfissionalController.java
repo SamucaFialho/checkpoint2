@@ -1,49 +1,76 @@
 package br.com.fiap.checkpoint2.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.checkpoint2.dto.dtoprofissional.ProfissinalResponse;
 import br.com.fiap.checkpoint2.dto.dtoprofissional.ProfissionalRequestCreate;
 import br.com.fiap.checkpoint2.dto.dtoprofissional.ProfissionalRequestUpdate;
+import br.com.fiap.checkpoint2.service.ProfissionalService;
 
-@Service
-@RequestMapping("/profissional")
+@RestController
+@RequestMapping("profissionais")
 public class ProfissionalController {
+
+    @Autowired
+    ProfissionalService profissionalService;
 
     @GetMapping("{id}")
     public ResponseEntity<ProfissinalResponse> findById (
-        @RequestBody ProfissionalRequestCreate dto){
-            return ResponseEntity.noContent().build();
+        @PathVariable Long id){
+            return profissionalService.getProfissionalById(id)
+            .map(p -> new ProfissinalResponse().toDto(p))
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
         }
 
 
 
     @PostMapping
-    public ResponseEntity<ProfissinalResponse> create(@PathVariable Long id){
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ProfissinalResponse> create(
+    @RequestBody ProfissionalRequestCreate dto){
+        return ResponseEntity.status(201).body(new ProfissinalResponse()
+        .toDto(profissionalService.createProfissional(dto)));
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        boolean result = profissionalService.deleteProfissional(id);
+
+        if (result) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<ProfissinalResponse> update(@PathVariable Long id, @RequestBody ProfissionalRequestUpdate dto){
+
+        return profissionalService.updateProfissional(id, dto)
+        .map(p -> new ProfissinalResponse().toDto(p))
+        .map(ResponseEntity::ok)
+        .orElse(ResponseEntity.notFound().build());
     }
 
 
     @GetMapping
     public ResponseEntity<List<ProfissinalResponse>> findAll(){
-        return ResponseEntity.noContent().build();
+        List<ProfissinalResponse> response = profissionalService.findAllList()
+        .stream().map(p -> new ProfissinalResponse().toDto(p))
+        .collect(Collectors.toList());
+        return ResponseEntity.ok(response); 
     }
-
-    // @PutMapping("{id}")
-    // public ResponseEntity<ProfissinalResponse> update(@PathVariable Long id,
-    //                                                   @RequestBody ProfissionalRequestUpdate dto){
-          
-
-    // }
 
 
 }

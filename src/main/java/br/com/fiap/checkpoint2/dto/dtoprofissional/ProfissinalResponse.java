@@ -2,15 +2,38 @@ package br.com.fiap.checkpoint2.dto.dtoprofissional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
+
+import br.com.fiap.checkpoint2.dto.dtoconsulta.ConsultaResponse;
+import br.com.fiap.checkpoint2.model.Profissional;
 
 public class ProfissinalResponse {
 
-        private Long id;
+    private Long id;
+    private List<ConsultaResponse> consulta;
     private String nome;
     private String especialidade;
     private BigDecimal valor_hora;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
+
+    // public List<ConsultaResponse> getConsultas(){
+    //     return consulta;
+    // }
+
+    // public void setConsulta(List<ConsultaResponse> consulta){
+    //     this.consulta = consulta;
+    // }
+
+    public ProfissinalResponse toDto(Profissional p){
+        this.setId(p.getId());
+        this.setNome(p.getNome());
+        this.setEspecialidade(p.getEspecialidade());
+        this.setValor_hora(p.getValor_hora());
+        this.setCreated_at(p.getCreated_at());
+        this.setUpdated_at(p.getUpdated_at());
+        return this;
+    }
 
     
     public Long getId() {

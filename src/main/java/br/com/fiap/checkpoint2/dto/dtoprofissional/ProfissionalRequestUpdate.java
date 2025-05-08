@@ -7,7 +7,6 @@ import br.com.fiap.checkpoint2.model.Profissional;
 
 public class ProfissionalRequestUpdate {
 
-    private String status;
     private Long id;
     private String nome;
     private String especialidade;
@@ -16,9 +15,12 @@ public class ProfissionalRequestUpdate {
     private LocalDateTime updated_at;
 
     public Profissional toModel(Profissional p){
-        Profissional profissional = new Profissional();
-        profissional.setStatus(this.status);
-        return profissional;
+        p.setNome(this.nome);
+        p.setEspecialidade(this.especialidade);
+        p.setValor_hora(this.valor_hora);
+        p.setUpdated_at(this.updated_at);
+        p.setCreated_at(this.created_at);
+        return p;
     }
 
     
@@ -58,11 +60,4 @@ public class ProfissionalRequestUpdate {
     public void setUpdated_at(LocalDateTime updated_at) {
         this.updated_at = updated_at;
     }
-    public String getStatus() {
-        return status;
-    }
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
 }

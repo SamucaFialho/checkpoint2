@@ -4,12 +4,15 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import br.com.fiap.checkpoint2.dto.dtoprofissional.ProfissionalRequestCreate;
 import br.com.fiap.checkpoint2.dto.dtoprofissional.ProfissionalRequestUpdate;
 import br.com.fiap.checkpoint2.model.Profissional;
 import br.com.fiap.checkpoint2.repository.ProfissionalRepository;
 
+
+@Service
 public class ProfissionalService {
 
 
@@ -27,7 +30,7 @@ public class ProfissionalService {
         return profissionalRepository.findAll();
     }
 
-    public Optional<Object> updateProfissional(Long id, ProfissionalRequestUpdate dto){
+    public Optional<Profissional> updateProfissional(Long id, ProfissionalRequestUpdate dto){
         return profissionalRepository.findById(id)
         .map(p -> profissionalRepository.save(dto.toModel(p)));
     }
@@ -41,3 +44,4 @@ public class ProfissionalService {
     }
 
 }
+
